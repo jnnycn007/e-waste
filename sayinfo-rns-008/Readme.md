@@ -75,9 +75,9 @@ Baud rate: **1 500 000 baud**, 8N1
 
 
 
-## Mic Board Interface
+## FPC Interface
 
-see [Mic Board FPC Interface Pin Definition](./hardware/Mic_board_FPC_interface_pin_definition.xlsx)
+see [FPC Interface Pin Definition](./hardware/FPC_interface_pin_definition.xlsx)
 
 
 
@@ -95,15 +95,6 @@ Device tree extracted from Android vendor firmware, see [Sayinfo-RNS-008-rk3326_
 
 Mainline device‑tree rewritten based on the Android device tree, see [rk3326-rns-008.dts](https://github.com/yjun123/linux/blob/add_rns_008_rk3326/arch/arm64/boot/dts/rockchip/rk3326-rns-008.dts).
 
-### Drivers
-
-| Chip      | Mainline Driver         | Status        | Driver Path                                     | Notes                                                        |
-| --------- | ----------------------- | ------------- | ----------------------------------------------- | ------------------------------------------------------------ |
-| GC5025    | —                       | Not mainlined | —                                               | 仅有 Rockchip BSP [内核驱动](http://github.com/rockchip-linux/kernel/blob/develop-6.1/drivers/media/i2c/gc5025.c) (`CONFIG_VIDEO_GC5025=y`); 主线无对应驱动, 需自行移植/提交 |
-| RTL8723BS | `r8723bs` (staging)     | Mainlined     | `drivers/staging/rtl8723bs/`                    | WiFi SDIO 部分已入主线 (staging); 蓝牙由 `drivers/bluetooth/btrtl.c` 提供 HCI 支持 |
-| ST7703    | `panel-sitronix-st7703` | Mainlined     | `drivers/gpu/drm/panel/panel-sitronix-st7703.c` | 已支持多款 720x1440 面板, 但本机 1024x600/6.89" 变体需新增 compatible + init sequence |
-| GSL1680   | `silead_ts`             | Mainlined     | `drivers/input/touchscreen/silead.c`            | 支持 `silead,gsl1680` 兼容串; 注意需 `firmware-name` 固件文件 (未随 linux-firmware 分发) |
-
 
 
 ### Firmware
@@ -112,6 +103,24 @@ Mainline device‑tree rewritten based on the Android device tree, see [rk3326-r
 | --------- | ------------------------------------------------------------ |
 | GSL1680   | [gsl1680.fw](./firmware/silead/gsl1680.fw)                   |
 | RTL8723BS | see [linux-firmware/rtl_bt](https://gitlab.com/kernel-firmware/linux-firmware/-/tree/main/rtl_bt) [linux-firmware/rtlwifi](https://gitlab.com/kernel-firmware/linux-firmware/-/tree/main/rtlwifi) |
+
+
+
+## Status
+
+| Hardware        | Status                                                       |
+| --------------- | ------------------------------------------------------------ |
+| MIPI-DSI Screen | Worked.                                                      |
+| Touch Screen    | Worked. need extra firmware, see [Firmware](###Firmware).    |
+| WiFi            | Partial. Can detect Wi‑Fi but fails to connect. need extra firmware, see [Firmware](###Firmware). |
+| BT              | Worked. need extra firmware, see [Firmware](###Firmware).    |
+| Speaker         | Worked.                                                      |
+| Headphone       | Worked.                                                      |
+| Mic             | Not worked.                                                  |
+| Camera          | Not worked.                                                  |
+| Keys            | Worked.                                                      |
+| MicroSD         | Worked. Need to disable the debug serial port, see [Notes](##Notes). |
+| USB             | Worked.                                                      |
 
 
 
